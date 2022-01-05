@@ -9,6 +9,16 @@ public class MyNetworkPlayer : NetworkBehaviour
     [SerializeField]
     private string displayName = "Missing name";
 
+    [SyncVar]
+    [SerializeField]
+    private Color displayColour = new Color(0,0,0);
+
+    [Server]
+    public void SetDisplayColor(Color RGB)
+    {
+        displayColour = RGB;
+    }
+
     [Server]
     public void SetDisplayName(string newDisplayName)
     {
