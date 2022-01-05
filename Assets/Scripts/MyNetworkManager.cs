@@ -15,7 +15,7 @@ public class MyNetworkManager : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);
-
-        Debug.Log("A player was added!!!");
+        
+        Debug.Log($"A player was added!!! Players are {numPlayers}");
     }
 }
