@@ -1,18 +1,17 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyNetworkPlayer : MonoBehaviour
+public class MyNetworkPlayer : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SyncVar]
+    [SerializeField]
+    private string displayName = "Missing name";
 
-    // Update is called once per frame
-    void Update()
+    [Server]
+    public void SetDisplayName(string newDisplayName)
     {
-        
+        displayName = newDisplayName;
     }
 }
