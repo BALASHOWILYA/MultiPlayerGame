@@ -39,8 +39,21 @@ public class MyNetworkPlayer : NetworkBehaviour
     [Command]
     private void CmdSetDisplayName(string newDisplayName)
     {
-
-        if (newDisplayName.Length <= 15 && !newDisplayName.StartsWith("My"))
+        //BlackListed words
+        List<string> BlackListed = new List<string>();
+        BlackListed.Add("fuck");
+        BlackListed.Add("asshole");
+        //WhiteSpace
+        BlackListed.Add(" ");
+        foreach (string blackWord in BlackListed)
+        {
+            if (newDisplayName.IndexOf(blackWord)>-1)
+            {
+                Debug.Log("wrong name");
+                return;
+            }
+        }
+        if (newDisplayName.Length <= 10)
         {
             RpcLogNewName(newDisplayName);
 
@@ -50,7 +63,6 @@ public class MyNetworkPlayer : NetworkBehaviour
         {
             Debug.Log("The name have more than 10 letters");
         }
-       
     }
 
     #endregion
@@ -71,7 +83,7 @@ public class MyNetworkPlayer : NetworkBehaviour
     [ContextMenu("Set My Name")]
     private void SetMyName()
     {
-        CmdSetDisplayName("My new name");
+        CmdSetDisplayName("ilya");
     }
 
     [ClientRpc]
