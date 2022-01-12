@@ -12,13 +12,15 @@ public class MyNetworkPlayer : NetworkBehaviour
 
     //Add a hook
 
-    [SyncVar(hook = nameof(HandleDisplayTextUpdated))]
+    [SyncVar(hook = nameof(HandleDisplayNameUpdated))]
     [SerializeField]
     private string displayName = "Missing name";
 
     [SyncVar(hook = nameof(HandleDisplayColourUpdated))]
     [SerializeField]
     private Color displayColour = Color.black;
+
+    #region Server
 
     [Server]
     public void SetDisplayColor(Color newDisplayColor)
@@ -31,6 +33,20 @@ public class MyNetworkPlayer : NetworkBehaviour
     {
         displayName = newDisplayName;
     }
+
+    //method that call from the client
+
+    [Command]
+    private void CmdSetDisplayName(string newDisplayName)
+    {
+        RpcLogNewName(newDisplayName);
+
+        SetDisplayName(newDisplayName);
+    }
+
+    #endregion
+
+    #region Client
     // methods to be used as the callback
     private void HandleDisplayColourUpdated(Color oldColour, Color newColour)
     {
@@ -38,10 +54,24 @@ public class MyNetworkPlayer : NetworkBehaviour
        
     }
 
-    private void HandleDisplayTextUpdated(string oldText, string newText)
+    private void HandleDisplayNameUpdated(string oldName, string newName)
     {
-        displayNameText.text = newText;
+        displayNameText.text = newName;
     }
 
-   
+    [ContextMenu("Set My Name")]
+    private void SetMyName()
+    {
+        CmdSetDisplayName("My new name");
+    }
+
+    [ClientRpc]
+    private void RpcLogNewName(string newDisplayName)
+    {
+        Debug.Log(newDisplayName);
+    }
+
+    #endregion
+
+
 }
