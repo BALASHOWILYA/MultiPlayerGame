@@ -53,15 +53,16 @@ public class MyNetworkPlayer : NetworkBehaviour
                 return;
             }
         }
-        if (newDisplayName.Length <= 10)
+        if (newDisplayName.Length < 2 || newDisplayName.Length > 20)
+        {
+            Debug.Log("The name have more than 10 letters");
+            return;  
+        }
+        else
         {
             RpcLogNewName(newDisplayName);
 
             SetDisplayName(newDisplayName);
-        }
-        else
-        {
-            Debug.Log("The name have more than 10 letters");
         }
     }
 
