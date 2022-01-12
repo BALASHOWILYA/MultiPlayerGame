@@ -43,8 +43,10 @@ public class MyNetworkPlayer : NetworkBehaviour
         List<string> BlackListed = new List<string>();
         BlackListed.Add("fuck");
         BlackListed.Add("asshole");
+
         //WhiteSpace
         BlackListed.Add(" ");
+
         foreach (string blackWord in BlackListed)
         {
             if (newDisplayName.IndexOf(blackWord)>-1)
