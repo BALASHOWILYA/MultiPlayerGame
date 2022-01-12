@@ -39,9 +39,18 @@ public class MyNetworkPlayer : NetworkBehaviour
     [Command]
     private void CmdSetDisplayName(string newDisplayName)
     {
-        RpcLogNewName(newDisplayName);
 
-        SetDisplayName(newDisplayName);
+        if (newDisplayName.Length <= 15 && !newDisplayName.StartsWith("My"))
+        {
+            RpcLogNewName(newDisplayName);
+
+            SetDisplayName(newDisplayName);
+        }
+        else
+        {
+            Debug.Log("The name have more than 10 letters");
+        }
+       
     }
 
     #endregion
