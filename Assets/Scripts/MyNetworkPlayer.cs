@@ -9,9 +9,10 @@ public class MyNetworkPlayer : NetworkBehaviour
 
     [SerializeField] private TMP_Text displayNameText = null;
     [SerializeField] private Renderer displayColourRenderer = null;
-    Material cachedMaterial;
 
-    [SyncVar]
+    //Add a hook
+
+    [SyncVar(hook = nameof(HandleDisplayTextUpdated))]
     [SerializeField]
     private string displayName = "Missing name";
 
@@ -30,11 +31,16 @@ public class MyNetworkPlayer : NetworkBehaviour
     {
         displayName = newDisplayName;
     }
-
+    // methods to be used as the callback
     private void HandleDisplayColourUpdated(Color oldColour, Color newColour)
     {
         displayColourRenderer.material.SetColor("_Color", newColour); 
        
+    }
+
+    private void HandleDisplayTextUpdated(string oldText, string newText)
+    {
+        displayNameText.text = newText;
     }
 
    
